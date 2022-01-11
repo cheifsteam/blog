@@ -170,4 +170,12 @@
       create_time = #{createTime,jdbcType=TIMESTAMP}
     where link_id = #{linkId,jdbcType=INTEGER}
   </update>
+
+  <delete id="deleteBatch" >
+    delete  from link
+    where link_id in
+    <foreach item="id" collection="array" open="(" separator="," close=")">
+      #{id}
+    </foreach>
+  </delete>
 </mapper>

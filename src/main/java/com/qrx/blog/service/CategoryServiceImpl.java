@@ -26,20 +26,20 @@ public class CategoryServiceImpl implements CategoryService {
         if (temp==null)
         {
             Category category = BeanCopyUtils.copyBean(categoryDto, Category.class);
-            return  categoryMapper.insert(category)>0;
+            return  categoryMapper.insertSelective(category)>0;
         }
         return false;
 
     }
 
     @Override
-    public Boolean deleteCategory(Integer Id) {
-            return categoryMapper.deleteByPrimaryKey(Id)>0;
+    public Boolean deleteCategory(Integer[] ids) {
+            return categoryMapper.deleteBatch(ids)>0;
     }
 
     @Override
     public Boolean updateCategory(CategoryDto categoryDto) {
-        Category category = categoryMapper.selectByCategoryName(categoryDto.getCategoryName());
+        Category category = categoryMapper.selectByPrimaryKey(categoryDto.getId());
         if (category!=null)
         {
             category.setCategoryName(categoryDto.getCategoryName());
@@ -53,6 +53,6 @@ public class CategoryServiceImpl implements CategoryService {
       categoryExample=new CategoryExample();
       List<Category> categories = categoryMapper.selectByExample(categoryExample);
       List<CategoryDto> categoryDtos = BeanCopyUtils.copyListProperties(categories, CategoryDto::new);
-        return categoryDtos;
+      return categoryDtos;
     }
 }

@@ -139,5 +139,11 @@
     from category
     where category_name = #{categoryName,jdbcType=VARCHAR}
   </select>
-
+  <delete id="deleteBatch" >
+    delete  from category
+    where id in
+    <foreach item="id" collection="array" open="(" separator="," close=")">
+      #{id}
+    </foreach>
+  </delete>
 </mapper>

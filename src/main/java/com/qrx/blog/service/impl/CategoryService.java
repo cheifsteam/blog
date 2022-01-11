@@ -1,6 +1,7 @@
 package com.qrx.blog.service.impl;
 
 import com.qrx.blog.dto.CategoryDto;
+import com.qrx.blog.dto.PageDto;
 
 import java.util.List;
 
@@ -19,10 +20,10 @@ public interface CategoryService {
 
     /**
      * 删除分类
-     * @param Id
+     * @param ids
      * @return
      */
-    Boolean deleteCategory(Integer Id);
+    Boolean deleteCategory(Integer[] ids);
 
     /**
      * 更新分类
