@@ -18,4 +18,6 @@ public interface TagMapper {
     int updateByPrimaryKeySelective(Tag record);
 
     int updateByPrimaryKey(Tag record);
+    Tag selectByTagName(String name);
+    int batchInsertBlogTag(List<Tag>list);
 }

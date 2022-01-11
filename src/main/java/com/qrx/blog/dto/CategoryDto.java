@@ -1,10 +1,13 @@
-package com.qrx.blog.domain;
-
-import com.fasterxml.jackson.annotation.JsonFormat;
+package com.qrx.blog.dto;
 
 import java.util.Date;
 
-public class Category {
+/**
+ * @author 屈燃希
+ * @version 1.0
+ * @project
+ */
+public class CategoryDto {
     private Integer id;
 
     private String categoryName;
@@ -12,7 +15,7 @@ public class Category {
     private String categoryImg;
 
     private Integer sort;
-    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
+
     private Date createTime;
 
     public Integer getId() {

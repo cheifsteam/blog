@@ -1,14 +1,17 @@
-package com.qrx.blog.domain;
-
-import com.fasterxml.jackson.annotation.JsonFormat;
+package com.qrx.blog.dto;
 
 import java.util.Date;
 
-public class Tag {
+/**
+ * @author 屈燃希
+ * @version 1.0
+ * @project
+ */
+public class TagDto {
     private Integer id;
 
     private String tagName;
-    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
+
     private Date createTime;
 
     public Integer getId() {

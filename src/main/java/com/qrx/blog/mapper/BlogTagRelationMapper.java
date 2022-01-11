@@ -18,4 +18,6 @@ public interface BlogTagRelationMapper {
     int updateByPrimaryKeySelective(BlogTagRelation record);
 
     int updateByPrimaryKey(BlogTagRelation record);
+    int deleteByTagId(Integer tagId);
+    int deleteByBlogId(Integer blogId);
 }

@@ -1,8 +1,13 @@
-package com.qrx.blog.domain;
+package com.qrx.blog.dto;
 
 import java.util.Date;
 
-public class Blog {
+/**
+ * @author 屈燃希
+ * @version 1.0
+ * @project
+ */
+public class BlogDto {
     private Integer id;
 
     private String blogTitle;
@@ -15,11 +20,26 @@ public class Blog {
 
     private Date updateTime;
 
-    private Integer categoryId;
+    private String blogContent;
 
+    private Integer categoryId;
     private String categoryName;
 
-    private String blogContent;
+    public String getCategoryName() {
+        return categoryName;
+    }
+
+    public void setCategoryName(String categoryName) {
+        this.categoryName = categoryName;
+    }
+
+    public Integer getCategoryId() {
+        return categoryId;
+    }
+
+    public void setCategoryId(Integer categoryId) {
+        this.categoryId = categoryId;
+    }
 
     public Integer getId() {
         return id;
@@ -67,22 +87,6 @@ public class Blog {
 
     public void setUpdateTime(Date updateTime) {
         this.updateTime = updateTime;
-    }
-
-    public Integer getCategoryId() {
-        return categoryId;
-    }
-
-    public void setCategoryId(Integer categoryId) {
-        this.categoryId = categoryId;
-    }
-
-    public String getCategoryName() {
-        return categoryName;
-    }
-
-    public void setCategoryName(String categoryName) {
-        this.categoryName = categoryName == null ? null : categoryName.trim();
     }
 
     public String getBlogContent() {

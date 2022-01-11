@@ -112,4 +112,17 @@
       create_time = #{createTime,jdbcType=TIMESTAMP}
     where id = #{id,jdbcType=INTEGER}
   </update>
+  <select id="selectByTagName" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List"/>
+    from tag
+    where tag_name = #{tagName,jdbcType=VARCHAR}
+  </select>
+  <insert id="batchInsertBlogTag" parameterType="java.util.List" useGeneratedKeys="true" keyProperty="id">
+    INSERT into tag(tag_name)
+    values
+    <foreach collection="list" item="item" separator=",">
+      (#{item.tagName,jdbcType=VARCHAR})
+    </foreach>
+  </insert>
 </mapper>

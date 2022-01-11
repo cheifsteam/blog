@@ -8,6 +8,8 @@
     <result column="blog_tag" jdbcType="VARCHAR" property="blogTag" />
     <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
     <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
+    <result column="category_Id" jdbcType="INTEGER" property="categoryId" />
+    <result column="category_name" jdbcType="VARCHAR" property="categoryName" />
   </resultMap>
   <resultMap extends="BaseResultMap" id="ResultMapWithBLOBs" type="com.qrx.blog.domain.Blog">
     <result column="blog_content" jdbcType="LONGVARCHAR" property="blogContent" />
@@ -42,7 +44,7 @@
     </where>
   </sql>
   <sql id="Base_Column_List">
-    id, blog_title, blog_img, blog_tag, create_time, update_time
+    id, blog_title, blog_img, blog_tag, create_time, update_time, category_Id, category_name
   </sql>
   <sql id="Blob_Column_List">
     blog_content
@@ -91,15 +93,17 @@
     delete from blog
     where id = #{id,jdbcType=INTEGER}
   </delete>
-  <insert id="insert" parameterType="com.qrx.blog.domain.Blog">
-    insert into blog (id, blog_title, blog_img, 
-      blog_tag, create_time, update_time, 
-      blog_content)
+  <insert id="insert" parameterType="com.qrx.blog.domain.Blog" useGeneratedKeys="true" keyProperty="id">
+    insert into blog (id, blog_title, blog_img,
+      blog_tag, create_time, update_time,
+      category_Id, category_name, blog_content
+      )
     values (#{id,jdbcType=INTEGER}, #{blogTitle,jdbcType=VARCHAR}, #{blogImg,jdbcType=VARCHAR}, 
       #{blogTag,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP}, 
-      #{blogContent,jdbcType=LONGVARCHAR})
+      #{categoryId,jdbcType=INTEGER}, #{categoryName,jdbcType=VARCHAR}, #{blogContent,jdbcType=LONGVARCHAR}
+      )
   </insert>
-  <insert id="insertSelective" parameterType="com.qrx.blog.domain.Blog">
+  <insert id="insertSelective" parameterType="com.qrx.blog.domain.Blog" useGeneratedKeys="true" keyProperty="id">
     insert into blog
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="id != null">
@@ -119,6 +123,12 @@
       </if>
       <if test="updateTime != null">
         update_time,
+      </if>
+      <if test="categoryId != null">
+        category_Id,
+      </if>
+      <if test="categoryName != null">
+        category_name,
       </if>
       <if test="blogContent != null">
         blog_content,
@@ -143,6 +153,12 @@
       <if test="updateTime != null">
         #{updateTime,jdbcType=TIMESTAMP},
       </if>
+      <if test="categoryId != null">
+        #{categoryId,jdbcType=INTEGER},
+      </if>
+      <if test="categoryName != null">
+        #{categoryName,jdbcType=VARCHAR},
+      </if>
       <if test="blogContent != null">
         #{blogContent,jdbcType=LONGVARCHAR},
       </if>
@@ -166,6 +182,12 @@
       <if test="updateTime != null">
         update_time = #{updateTime,jdbcType=TIMESTAMP},
       </if>
+      <if test="categoryId != null">
+        category_Id = #{categoryId,jdbcType=INTEGER},
+      </if>
+      <if test="categoryName != null">
+        category_name = #{categoryName,jdbcType=VARCHAR},
+      </if>
       <if test="blogContent != null">
         blog_content = #{blogContent,jdbcType=LONGVARCHAR},
       </if>
@@ -179,6 +201,8 @@
       blog_tag = #{blogTag,jdbcType=VARCHAR},
       create_time = #{createTime,jdbcType=TIMESTAMP},
       update_time = #{updateTime,jdbcType=TIMESTAMP},
+      category_Id = #{categoryId,jdbcType=INTEGER},
+      category_name = #{categoryName,jdbcType=VARCHAR},
       blog_content = #{blogContent,jdbcType=LONGVARCHAR}
     where id = #{id,jdbcType=INTEGER}
   </update>
@@ -188,7 +212,16 @@
       blog_img = #{blogImg,jdbcType=VARCHAR},
       blog_tag = #{blogTag,jdbcType=VARCHAR},
       create_time = #{createTime,jdbcType=TIMESTAMP},
-      update_time = #{updateTime,jdbcType=TIMESTAMP}
+      update_time = #{updateTime,jdbcType=TIMESTAMP},
+      category_Id = #{categoryId,jdbcType=INTEGER},
+      category_name = #{categoryName,jdbcType=VARCHAR}
     where id = #{id,jdbcType=INTEGER}
   </update>
+  <delete id="deleteBatch" >
+    delete  from blog
+    where id in
+    <foreach item="id" collection="array" open="(" separator="," close=")">
+      #{id}
+    </foreach>
+  </delete>
 </mapper>

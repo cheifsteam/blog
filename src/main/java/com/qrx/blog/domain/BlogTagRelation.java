@@ -7,6 +7,11 @@ public class BlogTagRelation {
 
     private Integer tagId;
 
+    public BlogTagRelation(Integer blogId, Integer tagId) {
+        this.blogId = blogId;
+        this.tagId = tagId;
+    }
+
     public Integer getId() {
         return id;
     }
