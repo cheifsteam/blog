@@ -19,7 +19,7 @@ public interface TagService   {
      * 删除标签
      * @param id
      */
-    Boolean deleteTag(Integer id);
+    Boolean deleteTag(Integer[] id);
 
     /**
      * 获取所有标签

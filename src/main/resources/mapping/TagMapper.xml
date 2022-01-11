@@ -125,4 +125,11 @@
       (#{item.tagName,jdbcType=VARCHAR})
     </foreach>
   </insert>
+  <delete id="deleteBatch" >
+    delete  from tag
+    where id in
+    <foreach item="id" collection="array" open="(" separator="," close=")">
+      #{id}
+    </foreach>
+  </delete>
 </mapper>

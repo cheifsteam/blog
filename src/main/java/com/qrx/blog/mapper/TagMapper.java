@@ -20,4 +20,5 @@ public interface TagMapper {
     int updateByPrimaryKey(Tag record);
     Tag selectByTagName(String name);
     int batchInsertBlogTag(List<Tag>list);
+    int deleteBatch(Integer[] ids);
 }
