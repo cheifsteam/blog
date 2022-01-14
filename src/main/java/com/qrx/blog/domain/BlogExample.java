@@ -624,6 +624,66 @@ public class BlogExample {
             addCriterion("category_name not between", value1, value2, "categoryName");
             return (Criteria) this;
         }
+
+        public Criteria andBlogViewsIsNull() {
+            addCriterion("blog_views is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andBlogViewsIsNotNull() {
+            addCriterion("blog_views is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andBlogViewsEqualTo(Long value) {
+            addCriterion("blog_views =", value, "blogViews");
+            return (Criteria) this;
+        }
+
+        public Criteria andBlogViewsNotEqualTo(Long value) {
+            addCriterion("blog_views <>", value, "blogViews");
+            return (Criteria) this;
+        }
+
+        public Criteria andBlogViewsGreaterThan(Long value) {
+            addCriterion("blog_views >", value, "blogViews");
+            return (Criteria) this;
+        }
+
+        public Criteria andBlogViewsGreaterThanOrEqualTo(Long value) {
+            addCriterion("blog_views >=", value, "blogViews");
+            return (Criteria) this;
+        }
+
+        public Criteria andBlogViewsLessThan(Long value) {
+            addCriterion("blog_views <", value, "blogViews");
+            return (Criteria) this;
+        }
+
+        public Criteria andBlogViewsLessThanOrEqualTo(Long value) {
+            addCriterion("blog_views <=", value, "blogViews");
+            return (Criteria) this;
+        }
+
+        public Criteria andBlogViewsIn(List<Long> values) {
+            addCriterion("blog_views in", values, "blogViews");
+            return (Criteria) this;
+        }
+
+        public Criteria andBlogViewsNotIn(List<Long> values) {
+            addCriterion("blog_views not in", values, "blogViews");
+            return (Criteria) this;
+        }
+
+        public Criteria andBlogViewsBetween(Long value1, Long value2) {
+            addCriterion("blog_views between", value1, value2, "blogViews");
+            return (Criteria) this;
+        }
+
+        public Criteria andBlogViewsNotBetween(Long value1, Long value2) {
+            addCriterion("blog_views not between", value1, value2, "blogViews");
+            return (Criteria) this;
+        }
     }
 
     public static class Criteria extends GeneratedCriteria {

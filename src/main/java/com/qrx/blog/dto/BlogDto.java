@@ -14,17 +14,26 @@ public class BlogDto {
 
     private String blogImg;
 
-    private String blogTag;
+    private String[] blogTag;
 
     private Date createTime;
 
     private Date updateTime;
+    private Long blogViews;
+
+
 
     private String blogContent;
 
     private Integer categoryId;
     private String categoryName;
+    public Long getBlogViews() {
+        return blogViews;
+    }
 
+    public void setBlogViews(Long blogViews) {
+        this.blogViews = blogViews;
+    }
     public String getCategoryName() {
         return categoryName;
     }
@@ -65,12 +74,12 @@ public class BlogDto {
         this.blogImg = blogImg == null ? null : blogImg.trim();
     }
 
-    public String getBlogTag() {
+    public String[] getBlogTag() {
         return blogTag;
     }
 
-    public void setBlogTag(String blogTag) {
-        this.blogTag = blogTag == null ? null : blogTag.trim();
+    public void setBlogTag(String[] blogTag) {
+        this.blogTag = blogTag;
     }
 
     public Date getCreateTime() {

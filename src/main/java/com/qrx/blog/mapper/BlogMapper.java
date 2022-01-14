@@ -22,6 +22,4 @@ public interface BlogMapper {
     int updateByPrimaryKeyWithBLOBs(Blog record);
 
     int updateByPrimaryKey(Blog record);
-
-    int deleteBatch(Integer[] ids);
 }

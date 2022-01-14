@@ -3,11 +3,13 @@ package com.qrx.blog.config;
 //import com.hqd.schoolnavigation.util.handler.UserSecurityHandlerInterceptor;
 //import com.hqd.schoolnavigation.util.handler.UserSecurityHandlerInterceptor;
 
+import com.qrx.blog.constant.Constants;
 import com.qrx.blog.util.handler.UserSecurityHandlerInterceptor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
+import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 /**
@@ -45,13 +47,19 @@ public class WebConfig {
                 };
                 registry.addInterceptor(userSecurityHandlerInterceptor()).addPathPatterns(addPath).excludePathPatterns();
             }
+            public void addResourceHandlers(ResourceHandlerRegistry registry) {
+                registry.addResourceHandler("/upload/**").addResourceLocations("file:" + Constants.RESOURCE_WIN_PATH);
+            }
         };
+
     }
     //定义拦截器，UserSecurityHandlerInterceptor这个类实现了HandlerInterceptor接口
     @Bean
     public UserSecurityHandlerInterceptor userSecurityHandlerInterceptor() {
         return new UserSecurityHandlerInterceptor();
     }
+
+
 
 }
 

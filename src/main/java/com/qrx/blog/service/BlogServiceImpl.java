@@ -38,7 +38,7 @@ public class BlogServiceImpl implements BlogService {
     public BlogExample blogExample;
     @Override
     public String addBlog(BlogDto blogDto) {
-         Category category = categoryMapper.selectByPrimaryKey(blogDto.getCategoryId());
+        Category category = categoryMapper.selectByCategoryName(blogDto.getCategoryName());
         if (category==null)
         {
             category=new Category();
@@ -47,7 +47,12 @@ public class BlogServiceImpl implements BlogService {
             blogDto.setCategoryId(category.getId());
         }
         final Blog blog = BeanCopyUtils.copyBean(blogDto, Blog.class);
-        String[] tags = blogDto.getBlogTag().split(",");
+        String[] tags = blogDto.getBlogTag();
+        StringBuilder stringBuilder=new StringBuilder();
+        for (int i = 0; i <tags.length ; i++) {
+            stringBuilder.append(tags[i]+" ");
+        }
+        blog.setBlogTag(stringBuilder.toString());
         if (tags.length>6)
         {
             return "标签不能超过6个";

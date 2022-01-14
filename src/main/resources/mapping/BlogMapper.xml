@@ -10,6 +10,7 @@
     <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
     <result column="category_Id" jdbcType="INTEGER" property="categoryId" />
     <result column="category_name" jdbcType="VARCHAR" property="categoryName" />
+    <result column="blog_views" jdbcType="BIGINT" property="blogViews" />
   </resultMap>
   <resultMap extends="BaseResultMap" id="ResultMapWithBLOBs" type="com.qrx.blog.domain.Blog">
     <result column="blog_content" jdbcType="LONGVARCHAR" property="blogContent" />
@@ -44,7 +45,8 @@
     </where>
   </sql>
   <sql id="Base_Column_List">
-    id, blog_title, blog_img, blog_tag, create_time, update_time, category_Id, category_name
+    id, blog_title, blog_img, blog_tag, create_time, update_time, category_Id, category_name, 
+    blog_views
   </sql>
   <sql id="Blob_Column_List">
     blog_content
@@ -93,17 +95,17 @@
     delete from blog
     where id = #{id,jdbcType=INTEGER}
   </delete>
-  <insert id="insert" parameterType="com.qrx.blog.domain.Blog" useGeneratedKeys="true" keyProperty="id">
-    insert into blog (id, blog_title, blog_img,
-      blog_tag, create_time, update_time,
-      category_Id, category_name, blog_content
-      )
+  <insert id="insert" parameterType="com.qrx.blog.domain.Blog">
+    insert into blog (id, blog_title, blog_img, 
+      blog_tag, create_time, update_time, 
+      category_Id, category_name, blog_views, 
+      blog_content)
     values (#{id,jdbcType=INTEGER}, #{blogTitle,jdbcType=VARCHAR}, #{blogImg,jdbcType=VARCHAR}, 
       #{blogTag,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP}, 
-      #{categoryId,jdbcType=INTEGER}, #{categoryName,jdbcType=VARCHAR}, #{blogContent,jdbcType=LONGVARCHAR}
-      )
+      #{categoryId,jdbcType=INTEGER}, #{categoryName,jdbcType=VARCHAR}, #{blogViews,jdbcType=BIGINT}, 
+      #{blogContent,jdbcType=LONGVARCHAR})
   </insert>
-  <insert id="insertSelective" parameterType="com.qrx.blog.domain.Blog" useGeneratedKeys="true" keyProperty="id">
+  <insert id="insertSelective" parameterType="com.qrx.blog.domain.Blog">
     insert into blog
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="id != null">
@@ -129,6 +131,9 @@
       </if>
       <if test="categoryName != null">
         category_name,
+      </if>
+      <if test="blogViews != null">
+        blog_views,
       </if>
       <if test="blogContent != null">
         blog_content,
@@ -159,6 +164,9 @@
       <if test="categoryName != null">
         #{categoryName,jdbcType=VARCHAR},
       </if>
+      <if test="blogViews != null">
+        #{blogViews,jdbcType=BIGINT},
+      </if>
       <if test="blogContent != null">
         #{blogContent,jdbcType=LONGVARCHAR},
       </if>
@@ -188,6 +196,9 @@
       <if test="categoryName != null">
         category_name = #{categoryName,jdbcType=VARCHAR},
       </if>
+      <if test="blogViews != null">
+        blog_views = #{blogViews,jdbcType=BIGINT},
+      </if>
       <if test="blogContent != null">
         blog_content = #{blogContent,jdbcType=LONGVARCHAR},
       </if>
@@ -203,6 +214,7 @@
       update_time = #{updateTime,jdbcType=TIMESTAMP},
       category_Id = #{categoryId,jdbcType=INTEGER},
       category_name = #{categoryName,jdbcType=VARCHAR},
+      blog_views = #{blogViews,jdbcType=BIGINT},
       blog_content = #{blogContent,jdbcType=LONGVARCHAR}
     where id = #{id,jdbcType=INTEGER}
   </update>
@@ -214,14 +226,8 @@
       create_time = #{createTime,jdbcType=TIMESTAMP},
       update_time = #{updateTime,jdbcType=TIMESTAMP},
       category_Id = #{categoryId,jdbcType=INTEGER},
-      category_name = #{categoryName,jdbcType=VARCHAR}
+      category_name = #{categoryName,jdbcType=VARCHAR},
+      blog_views = #{blogViews,jdbcType=BIGINT}
     where id = #{id,jdbcType=INTEGER}
   </update>
-  <delete id="deleteBatch" >
-    delete  from blog
-    where id in
-    <foreach item="id" collection="array" open="(" separator="," close=")">
-      #{id}
-    </foreach>
-  </delete>
 </mapper>

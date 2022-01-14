@@ -19,6 +19,8 @@ public class Blog {
 
     private String categoryName;
 
+    private Long blogViews;
+
     private String blogContent;
 
     public Integer getId() {
@@ -83,6 +85,14 @@ public class Blog {
 
     public void setCategoryName(String categoryName) {
         this.categoryName = categoryName == null ? null : categoryName.trim();
+    }
+
+    public Long getBlogViews() {
+        return blogViews;
+    }
+
+    public void setBlogViews(Long blogViews) {
+        this.blogViews = blogViews;
     }
 
     public String getBlogContent() {
