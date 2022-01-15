@@ -4,18 +4,12 @@
       <div class="handle-box">
         <el-button class="handle-del mr10" type="primary" size="mini" @click="delAll">批量删除</el-button>
         <el-input v-model="select_word" class="handle-input mr10" size="mini" placeholder="筛选关键词"></el-input>
-        <el-button type="primary" size="mini" @click="centerDialogVisible = true">添加歌手</el-button>
+       <router-link to="/EditBlog"> <el-button type="primary" size="mini" >添加博客</el-button></router-link>
       </div>
-      <el-table ref="multipleTable" size="mini" border style="width: 100%" height="550px" :data="data" @selection-change="handleSelectionChange">
+      <el-table ref="multipleTable" size="mini" border style="width: 100%" height="550px"   :data="tableData" @selection-change="handleSelectionChange">
         <el-table-column type="selection" width="40"></el-table-column>
-        <el-table-column label="歌手图片" width="110" align="center">
-          <template slot-scope="scope">
-            <div class="singer-img">
-              <img :src="getUrl(scope.row.blogImg)" alt="" style="width: 100%;"/>
-            </div>
-          </template>
-        </el-table-column>
-        <el-table-column label="标题" width="120" align="center">
+
+        <el-table-column label="标题" width="170" align="center">
           <template slot-scope="scope">
             <div>{{scope.row.blogTitle}}</div>
           </template>
@@ -25,14 +19,21 @@
               <div>{{scope.row.updateTime}}</div>
           </template>
         </el-table-column>
-        <el-table-column label="简介">
+        <el-table-column label="预览图" width="210" align="center">
           <template slot-scope="scope">
-            <p style="height: 100px; overflow: scroll">{{ scope.row.blogContent }}</p>
+            <div class="singer-img">
+              <img :src="getUrl(scope.row.blogImg)" alt="" style="width: 100%;"/>
+            </div>
           </template>
         </el-table-column>
-        <el-table-column label="歌曲管理" width="110" align="center">
+        <el-table-column label="简介">
           <template slot-scope="scope">
-            <el-button size="mini" @click="songEdit(scope.row.id, scope.row.name)">歌曲管理</el-button>
+            <p style="height: 200px; overflow: scroll">{{ scope.row.blogContent }}</p>
+          </template>
+        </el-table-column>
+        <el-table-column label="阅览量" width="120" align="center">
+          <template slot-scope="scope">
+            <div>{{scope.row.blogViews}}</div>
           </template>
         </el-table-column>
         <el-table-column label="操作" width="150" align="center">
@@ -48,52 +49,11 @@
           layout="total, prev, pager, next"
           :current-page="currentPage"
           :page-size="pageSize"
-          :total="tableData"
+          :total="total"
           @current-change="handleCurrentChange">
         </el-pagination>
       </div>
     </div>
-
-    <el-dialog title="添加歌手" :visible.sync="centerDialogVisible" width="400px" center>
-      <el-form
-        class="demo-ruleForm"
-        :model="registerForm"
-        status-icon
-        ref="registerForm"
-        label-width="80px"
-        >
-        <el-form-item prop="name" label="歌手名" size="mini">
-          <el-input v-model="registerForm.name" placeholder="歌手名"></el-input>
-        </el-form-item>
-        <el-form-item label="性别" size="mini">
-          <el-radio-group v-model="registerForm.sex">
-            <el-radio :label="0">女</el-radio>
-            <el-radio :label="1">男</el-radio>
-            <el-radio :label="2">组合</el-radio>
-            <el-radio :label="3">不明</el-radio>
-          </el-radio-group>
-        </el-form-item>
-        <el-form-item prop="location" label="故乡" size="mini">
-          <el-input v-model="registerForm.location" placeholder="故乡"></el-input>
-        </el-form-item>
-        <el-form-item prop="birth" label="出生" size="mini">
-          <el-date-picker
-            type="date"
-            placeholder="选择日期"
-            v-model="registerForm.birth"
-            style="width: 100%;"
-          ></el-date-picker>
-        </el-form-item>
-        <el-form-item prop="introduction" label="歌手介绍" size="mini">
-          <el-input v-model="registerForm.introduction" type="textarea" placeholder="歌手介绍"></el-input>
-        </el-form-item>
-      </el-form>
-      <span class="dialog-footer" slot="footer">
-        <el-button size="mini" @click="centerDialogVisible = false">取 消</el-button>
-        <el-button type="primary" size="mini" @click="addsinger">确 定</el-button>
-      </span>
-    </el-dialog>
-
     <!-- 编辑弹出框 -->
     <el-dialog title="编辑" :visible.sync="editVisible" width="400px">
       <el-form ref="form" :model="form" label-width="60px">
@@ -153,6 +113,7 @@ export default {
         introduction: ''
       },
       tableData: [],
+      total: 0,
       tempDate: [],
       multipleSelection: [],
       centerDialogVisible: false,
@@ -195,12 +156,13 @@ export default {
     }
   },
   created () {
-    this.getData()
+    this.getData(1)
   },
   methods: {
     // 获取当前页
     handleCurrentChange (val) {
       this.currentPage = val
+      this.getData(val)
     },
     uploadUrl (id) {
       return `${this.$store.state.HOST}/singer/avatar/update?id=${id}`
@@ -231,30 +193,24 @@ export default {
         })
       this.centerDialogVisible = false
     },
-    // 获取歌手
-    getData () {
-      this.tableData = []
-      this.tempDate = []
-      HttpManager.getAllBlogs().then(res => {
-        this.tableData = res.data.total
-        this.tempDate = res.data.data
-        this.currentPage = 1
+    // 获取所有博客
+    getData (val) {
+      let data = {
+        'page': val,
+        'pageSize': this.pageSize
+      }
+      HttpManager.getAllBlogs(data).then(res => {
+        console.log(res)
+        this.total = res.data.total
+        console.log(res.data.total)
+        this.tableData = res.data.data
+        this.currentPage = val
       })
     },
     // 编辑
     handleEdit (row) {
-      this.editVisible = true
-      this.idx = row.id
-      let datetime = row.birth
-      this.form = {
-        id: row.id,
-        name: row.name,
-        sex: row.sex,
-        pic: row.pic,
-        birth: datetime,
-        location: row.location,
-        introduction: row.introduction
-      }
+      console.log(row)
+      this.$router.push({path: '/EditBlog', query: {blog: row}})
     },
     // 保存编辑
     saveEdit () {
@@ -284,7 +240,7 @@ export default {
     },
     // 确定删除
     deleteRow () {
-      HttpManager.deleteSinger(this.idx)
+      HttpManager.deleteBlog(this.idx)
         .then(res => {
           if (res) {
             this.getData()
@@ -316,8 +272,8 @@ export default {
 }
 
 .singer-img {
-  width: 100%;
-  height: 80px;
+  width: 75%;
+  height: 150px;
   border-radius: 5px;
   margin-bottom: 5px;
   overflow: hidden;

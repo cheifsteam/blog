@@ -47,12 +47,7 @@ public class BlogServiceImpl implements BlogService {
             blogDto.setCategoryId(category.getId());
         }
         final Blog blog = BeanCopyUtils.copyBean(blogDto, Blog.class);
-        String[] tags = blogDto.getBlogTag();
-        StringBuilder stringBuilder=new StringBuilder();
-        for (int i = 0; i <tags.length ; i++) {
-            stringBuilder.append(tags[i]+" ");
-        }
-        blog.setBlogTag(stringBuilder.toString());
+        String[] tags = blogDto.getBlogTag().split(",");
         if (tags.length>6)
         {
             return "标签不能超过6个";

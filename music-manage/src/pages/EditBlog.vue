@@ -17,8 +17,8 @@
         </el-form-item>
         </div>
           <div class="inputCommon" >
-          <el-form-item prop="blogTag" >
-            <el-select v-model="blog.blogTag" clearable multiple filterable allow-create default-first-option placeholder="文章标签，用回车添加">
+          <el-form-item prop="tags" >
+            <el-select v-model="blog.tags" clearable multiple filterable allow-create default-first-option placeholder="文章标签，用回车添加">
             </el-select>
           </el-form-item>
           </div>
@@ -35,23 +35,23 @@
             <mavon-editor v-model="blog.blogContent" ref="md" @imgAdd="imgAdd" @change="change" style="min-height: 600px"/>
           </div>
           </el-form-item>
-          <el-button @click="handleEdit()">保存文章</el-button>
+          <el-button @click="handleEdit('blog')">保存文章</el-button>
+
           <el-dialog title="保存文章" :visible.sync="dialogFormVisible">
             <el-upload
               action="upload"
               :http-request="uploadSectionFile"
               :before-upload="beforeAvatarUpload">
               <div style="font-size: 90px;">
-                <img v-if="blog.blogImg" :src="getUrl(blog.blogImg)" alt=""/>
+                <img v-if="blog.blogImg" :src="getUrl(blog.blogImg)" alt="" class="avatar"/>
                 <i v-else class="el-icon-camera avatar-uploader-icon" ></i>
               </div>
               <div class="el-upload__text">将文件拖到此处，或<em>修改头像</em></div>
               <div class="el-upload__tip" slot="tip">只能上传jpg/png文件，且不超过10M</div>
             </el-upload>
-
             <span slot="footer" class="dialog-footer">
             <el-button size="mini" @click="dialogFormVisible=false">取 消</el-button>
-            <el-button type="primary" size="mini" @click="submit('blog')">确 定</el-button>
+            <el-button type="primary" size="mini" @click="submit()">确 定</el-button>
             </span>
           </el-dialog>
         </div>
@@ -74,28 +74,35 @@ export default {
   components: {
     mavonEditor
   },
-  data() {
+  data () {
     return {
       blog: {
         blogContent: '',
         categoryName: '',
-        blogTag: [],
+        blogTag: '',
         blogTitle: '',
-        blogImg: ''
+        blogImg: '',
+        tags: [],
+        id: 0,
       },
       categorys: [],
       html: '',
       fromRule: {
         blogContent: [{required: true, message: '博客内容为空', tiger: 'blur'}],
         categoryName: [{required: true, message: '分类为空', tiger: 'change'}],
-        blogTag: [{type: 'array', required: true, message: '标签为空', tiger: 'change'}],
-        blogTitle: [{required: true, message: '标题为空', tiger: 'blur'}]
+        // blogTag: [{required: true, message: '标签为空', tiger: 'change'}],
+        blogTitle: [{required: true, message: '标题为空', tiger: 'blur'}],
+        blogImg: [{required: true, message: '图片为空', tiger: 'blur'}],
+        tags: [{  type: 'array',required: true, message: '标签为空', tiger: 'change'}]
       },
-      dialogFormVisible: false
+      dialogFormVisible: false,
+
+
     }
   },
-  mounted() {
+  mounted () {
     this.getAllCategory()
+    this.init()
   },
   methods: {
     // handleClose (tag) {
@@ -119,16 +126,30 @@ export default {
     //   this.inputVisible = false
     //   this.inputValue = ''
     // },
-    handleEdit() {
-      this.dialogFormVisible = true // 开启弹出层
+    init () {
+      let data = this.$route.query.blog
+      if (data) {
+        this.blog = data || ''
+        this.blog.tags = this.blog.blogTag.split(',')
+      }
     },
-    getAllCategory() {
+    handleEdit (formName) {
+      this.$refs[formName].validate((valid) => {
+        if (valid) {
+          this.dialogFormVisible = true // 开启弹出层
+        } else
+        {
+          this.dialogFormVisible = false
+        }
+      })
+    },
+    getAllCategory () {
       HttpManager.getAllCategory().then(res => {
         this.categorys = res.data
         console.log(this.categorys)
       })
     },
-    imgAdd(pos, file) {
+    imgAdd (pos, file) {
       let formdata = new FormData()
       formdata.append('file', file)
       HttpManager.uploadFileByEditormd(file).then(res => {
@@ -138,7 +159,7 @@ export default {
         console.log(err)
       })
     },
-    uploadSectionFile(param) {
+    uploadSectionFile (param) {
       let form = new FormData()
       form.append('file', param.file)
       HttpManager.uploadFile(form).then((res) => {
@@ -152,7 +173,7 @@ export default {
         console.log(err)
       })
     },
-    beforeAvatarUpload(file) {
+    beforeAvatarUpload (file) {
       const isJPG = file.type === 'image/jpeg'
       const isLt2M = file.size / 1024 / 1024 < 10
       if (!isJPG) {
@@ -163,13 +184,15 @@ export default {
       }
       return isJPG && isLt2M
     },
-    change(value, render) {
+    change (value, render) {
       // render 为 markdown 解析后的结果[html]
       this.html = render
     },
-    submit(formName) {
-      this.$refs[formName].validate((valid) => {
-        if (valid) {
+    submit () {
+      this.blog.blogTag = this.blog.tags.toString()
+      console.log(this.validImg())
+      if (this.validImg()) {
+        if (this.blog.id) {
           HttpManager.addBlog(this.blog).then(res => {
             if (res.code === 200) {
               console.log(res.data)
@@ -180,15 +203,29 @@ export default {
             }
           })
         } else {
-          console.log('error submit!!')
+          HttpManager.updateBlog(this.blog).then(res => {
+            if (res.code === 200) {
+              console.log(res.data)
+              this.notify('添加成功', 'success')
+              this.reload()
+            } else {
+              this.notify('添加失败', res.msg)
+            }
+          })
         }
-      })
+      } else {
+        this.notify('上传图片不为空')
+      }
     },
-    getUrl(url) {
-      return `${this.$store.state.HOST}`+url
+    getUrl (url) {
+      return `${this.$store.state.HOST}` + url
+    },
+    validImg(){
+      return this.blog.blogImg!=''
     }
   }
 }
+
 </script>
 
 <style scoped>
@@ -210,5 +247,10 @@ export default {
   width: 90px;
   margin-left: 10px;
   vertical-align: bottom;
+}
+.avatar {
+  width: 178px;
+  height: 178px;
+  display: flex;
 }
 </style>

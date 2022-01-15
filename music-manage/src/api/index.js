@@ -7,7 +7,7 @@ const HttpManager = {
 
   // =======================> 用户 API
   // 返回所有用户
-  getAllBlogs: () => post(`/admin/blog/getAll`),
+  getAllBlogs: (params) => post(`/admin/blog/getAll`, params),
   // 返回指定ID的用户
   getUserOfId: (id) => get(`user/detail?id=${id}`),
   // 添加用户
@@ -40,8 +40,8 @@ const HttpManager = {
   setSinger: (params) => post(`singer/add`, params),
   // 更新歌手信息
   updateSingerMsg: (params) => post(`singer/update`, params),
-  // 删除歌手
-  deleteSinger: (id) => get(`singer/delete?id=${id}`),
+  // 删除博客
+  deleteBlog: (id) => get(`/admin/blog/delete`, id),
 
   // =======================> 歌曲 API
   // 返回所有歌曲
@@ -62,14 +62,13 @@ const HttpManager = {
   addBlog: (param) => post(`/admin/blog/add`, param),
   // 获取全部歌单
   getAllLinks: () => post(`/admin/link/getAll`),
-  // 更新歌单信息
+  // 上传图片
   uploadFile: (params) => post(`/admin/upload/file`, params),
   // 删除歌单
   deleteSongList: (id) => get(`songList/delete?id=${id}`),
 
-  // =======================> 歌单歌曲 API
-  // 给歌单添加歌曲
-  setListSong: (params) => post(`ListSong/add`, params),
+  // 更新博客
+  updateBlog: (params) => post(`/admin/blog/update`, params),
   // 返回歌单里指定歌单ID的歌曲
   getListSongOfSongId: (songListId) => get(`listSong/detail?songListId=${songListId}`),
   // 删除歌单里的歌曲

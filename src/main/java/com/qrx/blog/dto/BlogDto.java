@@ -14,7 +14,7 @@ public class BlogDto {
 
     private String blogImg;
 
-    private String[] blogTag;
+    private String blogTag;
 
     private Date createTime;
 
@@ -74,11 +74,11 @@ public class BlogDto {
         this.blogImg = blogImg == null ? null : blogImg.trim();
     }
 
-    public String[] getBlogTag() {
+    public String getBlogTag() {
         return blogTag;
     }
 
-    public void setBlogTag(String[] blogTag) {
+    public void setBlogTag(String blogTag) {
         this.blogTag = blogTag;
     }
 

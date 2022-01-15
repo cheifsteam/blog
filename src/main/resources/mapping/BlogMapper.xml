@@ -68,7 +68,7 @@
       order by ${orderByClause}
     </if>
   </select>
-  <select id="selectByExample" parameterType="com.qrx.blog.domain.BlogExample" resultMap="BaseResultMap">
+  <select id="selectByExample" parameterType="com.qrx.blog.domain.BlogExample" resultMap="BaseResultMap"  >
     select
     <if test="distinct">
       distinct
@@ -95,7 +95,7 @@
     delete from blog
     where id = #{id,jdbcType=INTEGER}
   </delete>
-  <insert id="insert" parameterType="com.qrx.blog.domain.Blog">
+  <insert id="insert" parameterType="com.qrx.blog.domain.Blog" useGeneratedKeys="true" keyProperty="id">
     insert into blog (id, blog_title, blog_img, 
       blog_tag, create_time, update_time, 
       category_Id, category_name, blog_views, 
@@ -105,7 +105,7 @@
       #{categoryId,jdbcType=INTEGER}, #{categoryName,jdbcType=VARCHAR}, #{blogViews,jdbcType=BIGINT}, 
       #{blogContent,jdbcType=LONGVARCHAR})
   </insert>
-  <insert id="insertSelective" parameterType="com.qrx.blog.domain.Blog">
+  <insert id="insertSelective" parameterType="com.qrx.blog.domain.Blog" useGeneratedKeys="true" keyProperty="id">
     insert into blog
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="id != null">
@@ -230,4 +230,11 @@
       blog_views = #{blogViews,jdbcType=BIGINT}
     where id = #{id,jdbcType=INTEGER}
   </update>
+  <delete id="deleteBatch" >
+    delete  from blog
+    where id in
+    <foreach item="id" collection="array" open="(" separator="," close=")">
+      #{id}
+    </foreach>
+  </delete>
 </mapper>
