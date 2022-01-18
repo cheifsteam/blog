@@ -16,7 +16,7 @@ public interface CategoryService {
      * @param categoryDto
      * @return
      */
-    Boolean addCategory(CategoryDto categoryDto);
+    String addCategory(CategoryDto categoryDto);
 
     /**
      * 删除分类

@@ -29,7 +29,7 @@ public class TagController {
         }
         return AjaxResult.error("添加失败");
     }
-    @DeleteMapping("/admin/tag/delete")
+    @PostMapping("/admin/tag/delete")
     public AjaxResult deleteTag(@RequestBody Integer[] ids){
         if(tagService.deleteTag(ids))
         {

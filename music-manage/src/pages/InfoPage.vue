@@ -13,7 +13,7 @@
               <div class="grid-num">新建博客</div>
               <div><p style="font-size: 25px">记录你的生活</p></div>
               <div class="icon"><i class="el-icon-edit"></i></div>
-              <div class="small-box"><router-link class="small-box " to="/song">More info </router-link>
+              <div class="small-box"><router-link class="small-box " to="/EditBlog">More info </router-link>
               </div>
             </div>
           </div>
@@ -27,7 +27,7 @@
               <div ><p>博客总数</p>
               </div>
               <div class="icon"><i class="el-icon-reading" ></i></div>
-              <div class="small-box"><router-link class="small-box " to="/song">More info </router-link>
+              <div class="small-box"><router-link class="small-box " to="/blog">More info </router-link>
               </div>
             </div>
           </div>
@@ -40,7 +40,7 @@
               <div class="grid-num">{{categoryCount}}</div>
               <div>分类总数</div>
               <div class="icon"><i class="el-icon-collection-tag"></i> </div>
-              <div class="small-box"><router-link class="small-box " to="/song">More info </router-link>
+              <div class="small-box"><router-link class="small-box " to="/category">More info </router-link>
               </div>
             </div>
           </div>
@@ -58,7 +58,7 @@
                 <path d="M3 2v4.586l7 7L14.586 9l-7-7H3zM2 2a1 1 0 0 1 1-1h4.586a1 1 0 0 1 .707.293l7 7a1 1 0 0 1 0 1.414l-4.586 4.586a1 1 0 0 1-1.414 0l-7-7A1 1 0 0 1 2 6.586V2z"/>
                 <path d="M5.5 5a.5.5 0 1 1 0-1 .5.5 0 0 1 0 1zm0 1a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3zM1 7.086a1 1 0 0 0 .293.707L8.75 15.25l-.043.043a1 1 0 0 1-1.414 0l-7-7A1 1 0 0 1 0 7.586V3a1 1 0 0 1 1-1v5.086z"/>
               </svg></div>
-              <div class="small-box"><router-link class="small-box " to="/song">More info </router-link>
+              <div class="small-box"><router-link class="small-box " to="/tag">More info </router-link>
               </div>
             </div>
           </div>
@@ -73,7 +73,7 @@
               <div class="icon"><svg xmlns="http://www.w3.org/2000/svg" width="90" height="90" fill="currentColor" class="bi bi-heart-fill" viewBox="0 0 16 16">
                 <path fill-rule="evenodd" d="M8 1.314C12.438-3.248 23.534 4.735 8 15-7.534 4.736 3.562-3.248 8 1.314z"/>
               </svg></div>
-              <div class="small-box"><router-link class="small-box " to="/song">More info </router-link>
+              <div class="small-box"><router-link class="small-box " to="/link">More info </router-link>
               </div>
             </div>
           </div>
@@ -109,30 +109,6 @@ export default {
       HttpManager.getAllBlogs().then(res => {
         this.blogCount = res.data.total
       })
-    },
-    setSex (sex, arr) {
-      let count = 0
-      for (let item of arr) {
-        if (sex === item.sex) {
-          count++
-        }
-      }
-      return count
-    },
-    getCountry (val) {
-      for (let item of this.country.rows) {
-        if (val.includes(item['国家'])) {
-          item['总数']++
-          break
-        }
-      }
-    },
-    getStyle (val) {
-      for (let item of this.songStyle.rows) {
-        if (val.includes(item['分格'])) {
-          item['总数']++
-        }
-      }
     },
     getAllTags () {
       HttpManager.getAllTags().then(res => {

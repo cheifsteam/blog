@@ -1,3 +1,4 @@
+import moment from 'moment'
 export const mixin = {
   methods: {
     // 提示信息
@@ -11,21 +12,28 @@ export const mixin = {
       return `${this.$store.state.HOST}` + url
     },
     // 获取要删除列表的id
-    handleDelete (id) {
-      this.idx = id
-      this.delVisible = true
+    handleDelete (ids) {
+      if (ids.length === 0) {
+        this.notify('至少选择一条记录', 'error')
+        this.delVisible = false
+      }else {
+        this.delVisible = true
+        this.ids = ids
+      }
     },
     // 获取批量要删除的列表
     handleSelectionChange (val) {
       this.multipleSelection = val
+      console.log(val)
     },
     // 批量删除
     delAll () {
+      let arr = []
       for (let item of this.multipleSelection) {
-        this.handleDelete(item.id)
-        this.deleteRow(item.id)
+        arr.push(item.id)
       }
       this.multipleSelection = []
+      this.handleDelete(arr)
     },
     // 得到歌曲名字
     replaceFName (str) {
@@ -62,32 +70,19 @@ export const mixin = {
       }
     },
     // 更新图片
-    handleAvatarSuccess (res, file) {
-      let _this = this
-      if (res.code === 1) {
-        _this.imageUrl = URL.createObjectURL(file.raw)
-        _this.getData()
-        _this.$notify({
-          title: '上传成功',
-          type: 'success'
-        })
-      } else {
-        _this.$notify({
-          title: '上传失败',
-          type: 'error'
-        })
-      }
-    },
     beforeAvatarUpload (file) {
-      const isJPG = (file.type === 'image/jpeg') || (file.type === 'image/png')
-      const isLt2M = file.size / 1024 / 1024 < 2
+      const isJPG = file.type === 'image/jpeg'
+      const isLt2M = file.size / 1024 / 1024 < 10
       if (!isJPG) {
-        this.$message.error('上传头像图片只能是 JPG 格式!')
+        this.notify('上传头像图片只能是 JPG 格式!')
       }
       if (!isLt2M) {
-        this.$message.error('上传头像图片大小不能超过 2MB!')
+        this.notify('上传头像图片大小不能超过 10MB!')
       }
       return isJPG && isLt2M
+    },
+    dateFormat (data) {
+      return moment(new Date(data).getTime()).format('YYYY-MM-DD HH:mm')
     }
   }
 }

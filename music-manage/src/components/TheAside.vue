@@ -36,24 +36,29 @@ export default {
           title: '系统首页'
         },
         {
-          icon: 'el-icon-user-solid',
-          index: 'consumer',
-          title: '用户管理'
+          icon: 'el-icon-price-tag',
+          index: 'tag',
+          title: '标签管理'
         },
         {
-          icon: 'el-icon-service',
-          index: 'singer',
-          title: '歌手管理'
+          icon: 'el-icon-reading',
+          index: 'blog',
+          title: '博客管理'
         },
         {
-          icon: 'el-icon-document',
-          index: 'songList',
-          title: '歌单管理'
+          icon: 'el-icon-collection-tag',
+          index: 'category',
+          title: '分类管理'
         },
         {
           icon: 'el-icon-edit',
           index: 'editBlog',
           title: '发布博客'
+        },
+        {
+          icon: 'el-icon-star-off',
+          index: 'link',
+          title: '友链管理'
         }
       ]
     }

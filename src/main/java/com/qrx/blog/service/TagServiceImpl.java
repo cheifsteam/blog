@@ -49,7 +49,7 @@ public class TagServiceImpl implements TagService {
         PageHelper.startPage(pageDto.getPage(), pageDto.getPageSize());
         tagExample=new TagExample();
         List<Tag> tags = tagMapper.selectByExample(tagExample);
-        final List<TagDto> tagDtos = BeanCopyUtils.copyListProperties(tags, TagDto::new);
+        List<TagDto> tagDtos = BeanCopyUtils.copyListProperties(tags, TagDto::new);
         PageInfo<Tag> pageInfo=new PageInfo(tags);
         pageDto.setData(tagDtos);
         pageDto.setTotal((int) pageInfo.getTotal());

@@ -21,14 +21,14 @@ public class CategoryServiceImpl implements CategoryService {
     @Resource
     public CategoryMapper categoryMapper;
     public CategoryExample categoryExample;
-    public Boolean addCategory(CategoryDto categoryDto){
+    public String addCategory(CategoryDto categoryDto){
         Category temp = categoryMapper.selectByCategoryName(categoryDto.getCategoryName());
         if (temp==null)
         {
             Category category = BeanCopyUtils.copyBean(categoryDto, Category.class);
-            return  categoryMapper.insertSelective(category)>0;
+            return  categoryMapper.insertSelective(category)>0?"添加成功":"添加失败";
         }
-        return false;
+        return "分类已经存在";
 
     }
 
@@ -42,8 +42,8 @@ public class CategoryServiceImpl implements CategoryService {
         Category category = categoryMapper.selectByPrimaryKey(categoryDto.getId());
         if (category!=null)
         {
-            category.setCategoryName(categoryDto.getCategoryName());
-            return categoryMapper.updateByPrimaryKeySelective(category)>0;
+            Category category1 = BeanCopyUtils.copyBean(categoryDto, Category.class);
+            return categoryMapper.updateByPrimaryKeySelective(category1)>0;
         }
         return false;
     }

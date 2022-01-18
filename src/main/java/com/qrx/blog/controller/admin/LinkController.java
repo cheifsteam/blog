@@ -5,10 +5,7 @@ import com.qrx.blog.dto.LinkDto;
 import com.qrx.blog.dto.PageDto;
 import com.qrx.blog.service.impl.LinkService;
 import com.qrx.blog.util.AjaxResult;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 import java.util.List;
@@ -31,7 +28,7 @@ public class LinkController {
         }
         return AjaxResult.error("添加失败");
     }
-    @DeleteMapping("/admin/link/delete")
+    @PostMapping("/admin/link/delete")
     public AjaxResult deleteLink(@RequestBody Integer[] ids )
     {
         if (LinkService.deleteLink(ids))

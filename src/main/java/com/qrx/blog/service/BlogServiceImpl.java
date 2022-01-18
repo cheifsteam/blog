@@ -91,12 +91,15 @@ public class BlogServiceImpl implements BlogService {
 
     @Override
     public Boolean deleteBlog(Integer[] Ids) {
-       return blogMapper.deleteBatch(Ids)>0;
+        for (Integer integer :Ids) {
+            blogTagRelationService.deleteBlogTagRelationByBlogId(integer);
+        }
+        return blogMapper.deleteBatch(Ids)>0;
     }
 
     @Override
     public String updateBlog(BlogDto blogDto) {
-        final Category category = categoryMapper.selectByPrimaryKey(blogDto.getCategoryId());
+        final Category category = categoryMapper.selectByCategoryName(blogDto.getCategoryName());
         if (category==null)
         {
             category.setId(1);
@@ -152,6 +155,20 @@ public class BlogServiceImpl implements BlogService {
         blogExample=new BlogExample();
         PageHelper.startPage(pageDto.getPage(),pageDto.getPageSize());
         final List<Blog> blogs = blogMapper.selectByExampleWithBLOBs(blogExample);
+        PageInfo pageInfo=new PageInfo(blogs);
+        final List<BlogDto> blogDtos = BeanCopyUtils.copyListProperties(blogs, BlogDto::new);
+        pageDto.setData(blogDtos);
+        pageDto.setTotal((int) pageInfo.getTotal());
+    }
+    @Override
+    public void getLikeBlogs(String filterName ,PageDto pageDto) {
+        blogExample = new BlogExample();
+        String name="%"+filterName+"%";
+        blogExample.or().andBlogTagLike(name);
+        blogExample.or().andBlogTitleLike(name);
+        blogExample.or().andCategoryNameLike(name);
+        List<Blog> blogs = blogMapper.selectByExampleWithBLOBs(blogExample);
+        PageHelper.startPage(pageDto.getPage(),pageDto.getPageSize());
         PageInfo pageInfo=new PageInfo(blogs);
         final List<BlogDto> blogDtos = BeanCopyUtils.copyListProperties(blogs, BlogDto::new);
         pageDto.setData(blogDtos);

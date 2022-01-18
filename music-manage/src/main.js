@@ -11,11 +11,13 @@ import store from './store/index'
 import '@/assets/js/iconfont.js'
 import mavonEditor from 'mavon-editor'
 import 'mavon-editor/dist/css/index.css'
+import moment from 'moment'
 
 Vue.use(Vuex)
 Vue.use(ElementUI)
 Vue.use(VCharts)
 Vue.use(mavonEditor)
+Vue.use(moment)
 
 /* eslint-disable no-new */
 new Vue({
@@ -23,4 +25,5 @@ new Vue({
   router: router,
   store: new Vuex.Store(store),
   render: h => h(App)
+
 })

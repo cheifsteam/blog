@@ -17,11 +17,31 @@
         </el-form-item>
         </div>
           <div class="inputCommon" >
-          <el-form-item prop="tags" >
-            <el-select v-model="blog.tags" clearable multiple filterable allow-create default-first-option placeholder="文章标签，用回车添加">
-            </el-select>
-          </el-form-item>
+<!--            <el-form-item prop="blogTag">-->
+            <el-tag
+              :key="tag"
+              v-for="tag in arr"
+              closable
+              :disable-transitions="false"
+              @close="handleClose(tag)"
+              @input="inputOnInput($event)">
+              {{tag}}
+            </el-tag>
+            <el-input
+              class="input-new-tag"
+              v-if="inputVisible"
+              v-model="blog.blogTag"
+              ref="saveTagInput"
+              size="small"
+              @keyup.enter.native="handleInputConfirm"
+              @blur="handleInputConfirm"
+              @input="inputOnInput($event)"
+            >
+            </el-input>
+            <el-button v-else class="button-new-tag" size="small" @click="showInput">+ New Tag</el-button>
+<!--            </el-form-item>-->
           </div>
+
         <div class="inputCommon">
           <el-form-item prop="categoryName">
           <el-select v-model="blog.categoryName" class="form-control">
@@ -32,11 +52,10 @@
         <div class="markdown" style="height: 600px">
           <el-form-item prop="blogContent">
           <div style="padding-top: 20px">
-            <mavon-editor v-model="blog.blogContent" ref="md" @imgAdd="imgAdd" @change="change" style="min-height: 600px"/>
+            <p style=""><mavon-editor v-model="blog.blogContent" ref="md" @imgAdd="imgAdd" @change="change" style="min-height: 600px"/></p>
           </div>
           </el-form-item>
-          <el-button @click="handleEdit('blog')">保存文章</el-button>
-
+          <el-button  @click="handleEdit('blog')">保存文章</el-button>
           <el-dialog title="保存文章" :visible.sync="dialogFormVisible">
             <el-upload
               action="upload"
@@ -83,62 +102,40 @@ export default {
         blogTitle: '',
         blogImg: '',
         tags: [],
-        id: 0,
+        id: 0
       },
       categorys: [],
       html: '',
       fromRule: {
         blogContent: [{required: true, message: '博客内容为空', tiger: 'blur'}],
         categoryName: [{required: true, message: '分类为空', tiger: 'change'}],
-        // blogTag: [{required: true, message: '标签为空', tiger: 'change'}],
-        blogTitle: [{required: true, message: '标题为空', tiger: 'blur'}],
-        blogImg: [{required: true, message: '图片为空', tiger: 'blur'}],
-        tags: [{  type: 'array',required: true, message: '标签为空', tiger: 'change'}]
+        blogTitle: [{required: true, message: '标题为空', tiger: 'blur'}]
       },
       dialogFormVisible: false,
-
-
+      inputVisible: false,
+      inputValue: '',
+      arr: []
     }
   },
   mounted () {
     this.getAllCategory()
-    this.init()
+    this.ini()
   },
   methods: {
-    // handleClose (tag) {
-    //   this.dynamicTags.splice(this.dynamicTags.indexOf(tag), 1)
-    // },
-    //
-    // showInput () {
-    //   this.inputVisible = true
-    //   this.$nextTick(_ => {
-    //     this.$refs.saveTagInput.$refs.input.focus()
-    //   })
-    // },
-    //
-    // handleInputConfirm () {
-    //   let inputValue = this.inputValue
-    //   if (inputValue && this.dynamicTags.length < 6) {
-    //     this.dynamicTags.push(inputValue)
-    //   } else {
-    //     this.notify('添加失败，标签不能多于6个', 'error')
-    //   }
-    //   this.inputVisible = false
-    //   this.inputValue = ''
-    // },
-    init () {
+    ini () {
       let data = this.$route.query.blog
-      if (data) {
+      console.log(JSON.stringify(data))
+      if (JSON.stringify(data)!==undefined) {
         this.blog = data || ''
-        this.blog.tags = this.blog.blogTag.split(',')
+        this.blog.tags = data.blogTag.split(',')
+        this.arr = this.blog.tags
       }
     },
     handleEdit (formName) {
       this.$refs[formName].validate((valid) => {
-        if (valid) {
+        if (valid && this.validForm()) {
           this.dialogFormVisible = true // 开启弹出层
-        } else
-        {
+        } else {
           this.dialogFormVisible = false
         }
       })
@@ -192,24 +189,27 @@ export default {
       this.blog.blogTag = this.blog.tags.toString()
       console.log(this.validImg())
       if (this.validImg()) {
-        if (this.blog.id) {
+        let isUpdate = this.blog.id
+        if (!isUpdate) {
+          console.log(isUpdate)
           HttpManager.addBlog(this.blog).then(res => {
             if (res.code === 200) {
               console.log(res.data)
               this.notify('添加成功', 'success')
               this.reload()
             } else {
-              this.notify('添加失败', res.msg)
+              this.notify('添加失败', 'error')
             }
           })
         } else {
           HttpManager.updateBlog(this.blog).then(res => {
             if (res.code === 200) {
               console.log(res.data)
-              this.notify('添加成功', 'success')
+              this.notify('更新成功', 'success')
               this.reload()
             } else {
-              this.notify('添加失败', res.msg)
+              console.log(res.data)
+              this.notify('更新失败', 'error')
             }
           })
         }
@@ -220,8 +220,56 @@ export default {
     getUrl (url) {
       return `${this.$store.state.HOST}` + url
     },
-    validImg(){
-      return this.blog.blogImg!=''
+    validImg () {
+      return this.blog.blogImg !== ''
+    },
+    validForm () {
+      if (this.blog.blogTitle.length > 100) {
+        this.notify('题目字数不能超过100字', 'error')
+        return false
+      }
+      if (this.blog.blogContent.length > 100000) {
+        this.notify('文章不能超过10万字', 'error')
+        return false
+      }
+      if (this.blog.tags.length === 0) {
+        this.notify('标签不能为空', 'error')
+        return false
+      }
+      return true
+    },
+    handleClose (tag) {
+      this.blog.tags.splice(this.blog.tags.indexOf(tag), 1)
+      this.arr = this.blog.tags
+      console.log(this.blog.tags.length)
+    },
+    showInput () {
+      this.inputVisible = true
+      this.$nextTick(_ => {
+        this.$refs.saveTagInput.$refs.input.focus()
+      })
+    },
+    handleInputConfirm () {
+      let inputValue = this.blog.blogTag
+      if (inputValue.length>=10) {
+        this.notify('标签字数不能超过10字', 'error')
+        this.inputVisible = false
+        return;
+      }
+      if (this.blog.tags.length >= 6) {
+        this.notify('标签个数不能超过6个', 'error')
+        this.inputVisible = false
+        return
+      }
+      if (inputValue) {
+        this.blog.tags.push(inputValue)
+      }
+      this.inputVisible = false
+      this.blog.blogTag = ''
+      this.arr = this.blog.tags
+    },
+    inputOnInput (e) {
+      this.$forceUpdate()
     }
   }
 }
@@ -252,5 +300,20 @@ export default {
   width: 178px;
   height: 178px;
   display: flex;
+}
+.el-tag + .el-tag {
+  margin-left: 10px;
+}
+.button-new-tag {
+  margin-left: 10px;
+  height: 32px;
+  line-height: 30px;
+  padding-top: 0;
+  padding-bottom: 0;
+}
+.input-new-tag {
+  width: 90px;
+  margin-left: 10px;
+  vertical-align: bottom;
 }
 </style>

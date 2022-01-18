@@ -15,23 +15,18 @@ const constantRoutes = [
         meta: { title: 'Info' }
       },
       {
-        path: '/song',
-        component: resolve => require(['../pages/SongPage.vue'], resolve),
-        meta: { title: 'Song' }
+        path: '/Blog',
+        component: resolve => require(['../pages/BlogPage.vue'], resolve),
+        meta: { title: 'blog' }
       },
       {
-        path: '/Singer',
-        component: resolve => require(['../pages/SingerPage.vue'], resolve),
-        meta: { title: 'Singer' }
-      },
-      {
-        path: '/SongList',
-        component: resolve => require(['../pages/SongListPage.vue'], resolve),
-        meta: { title: 'SongList' }
+        path: '/Category',
+        component: resolve => require(['../pages/CategoryPage.vue'], resolve),
+        meta: { title: 'Category' }
       },
       {
         path: '/ListSong',
-        component: resolve => require(['../pages/ListSongPage.vue'], resolve),
+        component: resolve => require(['../pages/LinkPage.vue'], resolve),
         meta: { title: 'ListSong' }
       },
       {
@@ -40,14 +35,14 @@ const constantRoutes = [
         meta: { title: 'Comment' }
       },
       {
-        path: '/Consumer',
-        component: resolve => require(['../pages/ConsumerPage.vue'], resolve),
-        meta: { title: 'Consumer' }
+        path: '/Tag',
+        component: resolve => require(['../pages/TagPage.vue'], resolve),
+        meta: { title: 'tag' }
       },
       {
-        path: '/Collect',
-        component: resolve => require(['../pages/CollectPage.vue'], resolve),
-        meta: { title: 'Collect' }
+        path: '/Link',
+        component: resolve => require(['../pages/LinkPage.vue'], resolve),
+        meta: { title: 'Link' }
       },
       {
         path: '/EditBlog',

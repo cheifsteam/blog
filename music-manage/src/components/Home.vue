@@ -12,14 +12,12 @@
 </template>
 
 <script>
-import SongAudio from './SongAudio'
 import TheHeader from './TheHeader.vue'
 import TheAside from './TheAside.vue'
 import _ctrEvent from '../assets/js/ctr-event'
 
 export default {
   components: {
-    SongAudio,
     TheHeader,
     TheAside
   },

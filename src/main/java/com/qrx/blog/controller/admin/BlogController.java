@@ -37,7 +37,7 @@ public class BlogController {
          String msg = blogService.addBlog(blogDto);
         return AjaxResult.success(msg);
     }
-    @DeleteMapping("/admin/blog/delete")
+    @PostMapping("/admin/blog/delete")
     public AjaxResult deleteBlog(@RequestBody Integer[] ids)
     {
         if(blogService.deleteBlog(ids)){
@@ -57,6 +57,12 @@ public class BlogController {
         blogService.getAllBlogs(pageDto);
         return AjaxResult.success("获取成功",pageDto);
 
+    }
+    @PostMapping("/admin/blog/getLike")
+    public AjaxResult getLikeBlog(@RequestBody PageDto pageDto,@RequestParam String filterName)
+    {
+        blogService.getLikeBlogs(filterName,pageDto);
+        return AjaxResult.success("获取成功",pageDto);
     }
     @PostMapping("/admin/blog/uploadFileByEditormd")
     public AjaxResult uploadFileByEditormd(

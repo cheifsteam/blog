@@ -1,6 +1,6 @@
 <template>
   <div class="login-wrap">
-    <div class="ms-title">Yin-music 后台管理</div>
+    <div class="ms-title">博客后台管理</div>
     <div class="ms-login">
       <el-form
         ref="ruleForm"

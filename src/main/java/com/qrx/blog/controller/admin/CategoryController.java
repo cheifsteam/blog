@@ -26,13 +26,10 @@ public class CategoryController {
     @PostMapping("/admin/category/add")
     public AjaxResult addCategory(@RequestBody CategoryDto categoryDto)
     {
-        if (categoryService.addCategory(categoryDto))
-        {
-            return AjaxResult.success("添加成功");
-        }
-        return AjaxResult.error("添加失败");
+         String msg = categoryService.addCategory(categoryDto);
+      return  AjaxResult.success(msg);
     }
-    @DeleteMapping("/admin/category/delete")
+    @PostMapping("/admin/category/delete")
     public AjaxResult deleteCategory(@RequestBody Integer[] ids )
     {
         if (categoryService.deleteCategory(ids))

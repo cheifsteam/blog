@@ -36,4 +36,6 @@ public interface BlogService {
      * @param pageDto
      */
     void getAllBlogs(PageDto pageDto);
+
+    void getLikeBlogs(String filterName ,PageDto pageDto);
 }
