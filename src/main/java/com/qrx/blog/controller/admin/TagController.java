@@ -1,11 +1,9 @@
 package com.qrx.blog.controller.admin;
 
-import com.qrx.blog.domain.Tag;
 import com.qrx.blog.dto.PageDto;
 import com.qrx.blog.dto.TagDto;
-import com.qrx.blog.service.impl.TagService;
+import com.qrx.blog.service.TagService;
 import com.qrx.blog.util.AjaxResult;
-import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;

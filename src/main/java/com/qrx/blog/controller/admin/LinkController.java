@@ -1,14 +1,12 @@
 package com.qrx.blog.controller.admin;
 
-import com.github.pagehelper.PageInfo;
 import com.qrx.blog.dto.LinkDto;
 import com.qrx.blog.dto.PageDto;
-import com.qrx.blog.service.impl.LinkService;
+import com.qrx.blog.service.LinkService;
 import com.qrx.blog.util.AjaxResult;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
-import java.util.List;
 
 /**
  * @author 屈燃希

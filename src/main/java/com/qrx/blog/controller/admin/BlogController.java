@@ -3,10 +3,9 @@ package com.qrx.blog.controller.admin;
 import com.qrx.blog.constant.Constants;
 import com.qrx.blog.dto.BlogDto;
 import com.qrx.blog.dto.PageDto;
-import com.qrx.blog.service.impl.BlogService;
+import com.qrx.blog.service.BlogService;
 import com.qrx.blog.util.AjaxResult;
 import com.qrx.blog.util.MyBlogUtils;
-import org.apache.ibatis.annotations.Delete;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 

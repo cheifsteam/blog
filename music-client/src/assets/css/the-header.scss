@@ -1,0 +1,175 @@
+@import "var.scss";
+@import "global.scss";
+
+.the-header {
+  width: 1600px;
+  height: 75px;
+  -webkit-transition: all 1s ease!important;
+  transition: all 1s ease!important;
+  position: fixed;
+  left: 2.5%;
+  top: 2.5%;
+  z-index: 999;
+  border-radius: 20px;
+  word-break: keep-all;
+  .header-logo {
+    margin: $header-logo-margin;
+    font-size: $font-size-logo;
+    font-weight: bold;
+    cursor: pointer;
+    float: left;
+    position: relative;
+    height: 75px;
+    line-height: 75px;
+    color: #2aa3ef;
+  }
+}
+.the-header:hover{
+  background-color: #eee;
+  border-radius:15px;
+  opacity:0.85;
+}
+
+
+.sticky{
+  background-color: #eee;
+  border-radius:15px;
+  opacity:0.85;
+}
+
+
+.lower {
+  position: relative;
+  display: inline-block;
+  float: right;
+  margin-top: 10px;
+  margin-right: 20px;
+  font-size: 16px;
+  font-weight: var(--global-font-weight);
+}
+.site-top {
+  width: 100%;
+  display: block;
+  margin: 0 auto;
+  padding: 0 20px;
+}
+
+/*nav*/
+.navbar {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: inline-block;
+  animation: fadeInLeft 1s;
+  margin-block-start: 1em;
+  margin-block-end: 1em;
+  margin-inline-start: 0px;
+  margin-inline-end: 0px;
+  padding-inline-start: 40px;
+  li {
+    margin: $header-nav-margin;
+    padding: $header-nav-padding;
+    font-size: $font-size-header;
+    color:  #00cbff;
+    text-align: center;
+    border-bottom: none;
+    box-sizing: border-box;
+    cursor: pointer;
+    transition: all 1s ease;
+    display: inline-block;
+  }
+  li:after{
+    content: "";
+    display: block;
+    position: absolute;
+    top: 60px;
+    height: 6px;
+    background-color: #4968ff;
+    width: 40px;
+    max-width: 0;
+    box-sizing: inherit;
+    transition:max-width 0.25s;
+  }
+  li:hover:after{
+    max-width: 100%;
+  }
+  li:hover{
+    color: #4968ff;
+  }
+
+}
+
+/*搜索*/
+
+
+/*用户*/
+.header-right {
+  position: relative;
+  @include layout(center, center);
+  #user {
+    overflow: hidden;
+    width: $header-user-width;
+    height: $header-user-height;
+    border-radius: $header-user-radius;
+    margin: $header-user-margin;
+    cursor: pointer;
+    img {
+      width: 64px;
+      height: 64px;
+    }
+  }
+}
+
+.menu {
+  display: none;
+  line-height: 0px;
+  position: absolute;
+  background-color: $color-white;
+  @include box-shadow(1px 1px 10px rgba(0, 0, 0, 0.4));
+  width: $header-menu-width;
+  padding: $header-menu-padding;
+  border-radius: $header-menu-radius;
+  top: $header-height + 10px;
+  right: -20px;
+  z-index: 5;
+  text-align: center;
+  cursor: pointer;
+
+  li {
+    display: inline-block;
+    width: 100%;
+    height: 40px;
+    line-height: 40px;
+
+    &:after {
+      background-color: $theme-color;
+      color: $color-white;
+    }
+  }
+
+
+
+}
+
+.show {
+  display: block;
+}
+
+
+.active {
+  //color: $theme-color !important;
+  //border-bottom: 5px solid $theme-color !important;
+}
+.search-btn {
+  float: right;
+  .icon {
+    padding-right: 40px;
+    color: $color-blue-active;
+    @include icon(1.2em,$color-blue-active)
+
+  }
+
+}
+
+
+

@@ -1,17 +1,13 @@
 package com.qrx.blog.controller.admin;
 
 import com.qrx.blog.dto.CategoryDto;
-import com.qrx.blog.dto.PageDto;
-import com.qrx.blog.mapper.CategoryMapper;
-import com.qrx.blog.service.impl.CategoryService;
+import com.qrx.blog.service.CategoryService;
 import com.qrx.blog.util.AjaxResult;
-import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.Resource;
-import java.util.AbstractMap;
 import java.util.List;
 
 /**

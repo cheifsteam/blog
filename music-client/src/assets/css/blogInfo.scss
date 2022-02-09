@@ -1,0 +1,90 @@
+@import "var.scss";
+@import "global.scss";
+@import "home.scss";
+@import "content-list.scss";
+
+.feature{
+  position: absolute;
+  margin-top: 10px;
+  img{
+    width: 100px;
+    height: 100px;
+    padding: 2px;
+    border: 1px solid #dadada;
+    position: relative;
+    object-fit: cover;
+  }
+
+}
+.p-time {
+  display: inline-block;
+  font-size: 16px;
+  margin-left: 20px;
+  color: #989898;
+  letter-spacing: 0;
+  font-weight: 300;
+  float: right;
+}
+.content {
+  position: relative;
+  min-height: 60px;
+  margin: 0 0 0 17%;
+  font-size: 15px;
+  color: rgba(0,0,0,.66);
+  letter-spacing: 0;
+  line-height: 30px;
+  word-break: break-all;
+  word-wrap: break-word;
+  font-weight: 500;
+}
+.h1-title{
+  font-size: 20px;
+  font-weight: 400;
+  line-height: 50px;
+  margin: 0 0 0 17%;
+  color: #504E4E;
+
+  position: relative;
+  z-index: 1;
+  display: inline-block;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  width: 70%;
+}
+.h1-title:hover {
+  color: #00b5f2;
+}
+.tag{
+  margin-top: 10px;
+  float: right;
+  width: 300px;
+  height: 700px;
+  margin-right: 10px;
+  animation-duration: 2.5s;
+  animation-timing-function: ease;
+  animation-delay: 0s;
+  animation-iteration-count: 1;
+  animation-direction: normal;
+  animation-fill-mode: forwards;
+  animation-play-state: running;
+  animation-name: fadeInRight;
+
+}
+.tag-span{
+  margin-top: 100px;
+  float: right;
+  margin-right: 10px;
+}
+.div-content{
+  animation-duration: 1s;
+  animation-timing-function: ease;
+  animation-delay: 0s;
+  animation-iteration-count: 1;
+  animation-direction: normal;
+  animation-fill-mode: forwards;
+  animation-play-state: running;
+  animation-name: fadeInUp;
+}
+
+

@@ -16,6 +16,7 @@ public class LinkDto {
     private String linkDescription;
 
     private Integer linkRank;
+    private String linkImg;
 
     private Byte isDeleted;
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
@@ -23,6 +24,14 @@ public class LinkDto {
 
     public Integer getLinkId() {
         return linkId;
+    }
+
+    public String getLinkImg() {
+        return linkImg;
+    }
+
+    public void setLinkImg(String linkImg) {
+        this.linkImg = linkImg;
     }
 
     public void setLinkId(Integer linkId) {

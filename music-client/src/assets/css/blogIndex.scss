@@ -1,0 +1,19 @@
+@import "var.scss";
+@import "global.scss";
+
+.cat-title{
+  color: #9fd8f4;
+  font-size: 40px;
+  font-weight: var(--global-font-weight,500);
+  width: 80%;
+  margin: auto;
+  padding: 0;
+  border: 0;
+}
+.index-center {
+  width: 100%;
+  background-color: $color-white;
+  padding: 0px 100px 0px 200px;
+  box-sizing: border-box;
+  margin:auto
+}

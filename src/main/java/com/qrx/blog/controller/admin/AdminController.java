@@ -2,9 +2,8 @@ package com.qrx.blog.controller.admin;
 
 import com.qrx.blog.dto.AdminDto;
 import com.qrx.blog.dto.PageDto;
-import com.qrx.blog.service.impl.AdminService;
+import com.qrx.blog.service.AdminService;
 import com.qrx.blog.util.AjaxResult;
-import com.qrx.blog.util.Redis.RedisCache;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;

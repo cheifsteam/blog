@@ -1,0 +1,39 @@
+@import "var.scss";
+
+html, body, div, span,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+dl, dt, dd, ol, ul, li,hr,img,a,
+form, label, tr, th, td,
+article, aside, canvas, details, embed,
+figure, figcaption, footer, header {
+  padding: 0;
+  margin: 0;
+}
+
+ul,
+li {
+  list-style: none;
+
+}
+
+html {
+  min-width: 1200px;
+  font-size: 14px;
+  background-color: $theme-background-color;
+}
+
+div {
+  box-sizing: content-box;
+}
+
+/*表单*/
+.el-select-dropdown__item {
+  display: block !important;
+}
+
+
+
+.el-slider__runway {
+  background-color: $color-blue !important;
+}
+

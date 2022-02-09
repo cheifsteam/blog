@@ -18,5 +18,6 @@ public interface LinkMapper {
     int updateByPrimaryKeySelective(Link record);
 
     int updateByPrimaryKey(Link record);
+
     int deleteBatch(Integer[] ids);
 }

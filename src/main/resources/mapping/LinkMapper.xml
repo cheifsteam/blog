@@ -10,6 +10,7 @@
     <result column="link_rank" jdbcType="INTEGER" property="linkRank" />
     <result column="is_deleted" jdbcType="TINYINT" property="isDeleted" />
     <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="link_img" jdbcType="VARCHAR" property="linkImg" />
   </resultMap>
   <sql id="Example_Where_Clause">
     <where>
@@ -42,7 +43,7 @@
   </sql>
   <sql id="Base_Column_List">
     link_id, link_type, link_name, link_url, link_description, link_rank, is_deleted, 
-    create_time
+    create_time, link_img
   </sql>
   <select id="selectByExample" parameterType="com.qrx.blog.domain.LinkExample" resultMap="BaseResultMap">
     select
@@ -72,10 +73,12 @@
   <insert id="insert" parameterType="com.qrx.blog.domain.Link">
     insert into link (link_id, link_type, link_name, 
       link_url, link_description, link_rank, 
-      is_deleted, create_time)
+      is_deleted, create_time, link_img
+      )
     values (#{linkId,jdbcType=INTEGER}, #{linkType,jdbcType=TINYINT}, #{linkName,jdbcType=VARCHAR}, 
       #{linkUrl,jdbcType=VARCHAR}, #{linkDescription,jdbcType=VARCHAR}, #{linkRank,jdbcType=INTEGER}, 
-      #{isDeleted,jdbcType=TINYINT}, #{createTime,jdbcType=TIMESTAMP})
+      #{isDeleted,jdbcType=TINYINT}, #{createTime,jdbcType=TIMESTAMP}, #{linkImg,jdbcType=VARCHAR}
+      )
   </insert>
   <insert id="insertSelective" parameterType="com.qrx.blog.domain.Link">
     insert into link
@@ -104,6 +107,9 @@
       <if test="createTime != null">
         create_time,
       </if>
+      <if test="linkImg != null">
+        link_img,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
       <if test="linkId != null">
@@ -129,6 +135,9 @@
       </if>
       <if test="createTime != null">
         #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="linkImg != null">
+        #{linkImg,jdbcType=VARCHAR},
       </if>
     </trim>
   </insert>
@@ -156,6 +165,9 @@
       <if test="createTime != null">
         create_time = #{createTime,jdbcType=TIMESTAMP},
       </if>
+      <if test="linkImg != null">
+        link_img = #{linkImg,jdbcType=VARCHAR},
+      </if>
     </set>
     where link_id = #{linkId,jdbcType=INTEGER}
   </update>
@@ -167,10 +179,10 @@
       link_description = #{linkDescription,jdbcType=VARCHAR},
       link_rank = #{linkRank,jdbcType=INTEGER},
       is_deleted = #{isDeleted,jdbcType=TINYINT},
-      create_time = #{createTime,jdbcType=TIMESTAMP}
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      link_img = #{linkImg,jdbcType=VARCHAR}
     where link_id = #{linkId,jdbcType=INTEGER}
   </update>
-
   <delete id="deleteBatch" >
     delete  from link
     where link_id in

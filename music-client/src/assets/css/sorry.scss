@@ -1,0 +1,90 @@
+@import "var.scss";
+@import "home.scss";
+@import "search.scss";
+
+.searchInfo-form {
+  .micro{
+    position: relative;
+  }
+  .mb- {
+    color: #2aa3ef;
+    padding-left: 24px;
+    padding-bottom: 20px;
+  }
+  animation-duration: 2s;
+  animation-timing-function: ease;
+  animation-delay: 0s;
+  animation-iteration-count: 1;
+  animation-direction: normal;
+  animation-fill-mode: forwards;
+  animation-play-state: running;
+  animation-name: fadeInUp;
+}
+.page-title{
+  margin-top: 20px;
+
+  --load_nextpage_svg: url("https://cdn.jsdelivr.net/gh/Fuukei/Public_Repository@latest/vision/load_svg/ball.svg");
+  --style_menu_radius: 12px;
+
+  text-shadow: 0 0 1px rgba(0,0,0,.1);
+  line-height: 1.5;
+  font-family: 'noto serif sc','source han serif sc','source han serif',source-han-serif-sc,'pt serif',songti sc,microsoft yahei,Georgia,serif;
+  text-align: center;
+  box-sizing: border-box;
+  border: 1px dashed #ddd;
+  padding: 10px 15px;
+  color: #505050;
+  transition: all .8s ease!important;
+  font-weight: 300;
+  font-size: 30px;
+  margin-bottom: 10px;
+  animation-duration: 2s;
+  animation-timing-function: ease;
+  animation-delay: 0s;
+  animation-iteration-count: 1;
+  animation-direction: normal;
+  animation-fill-mode: forwards;
+  animation-play-state: running;
+  animation-name: fadeInUp;
+}
+.sorry{
+  margin-top: 80px;
+  color:  #00cbff;
+  margin-bottom: 80px;
+  font-size: 20px;
+  .sorry-inner{
+    margin-top: 50px;
+    padding: 20px;
+    border: 1px solid #00cbff;
+    font-size: 18px;
+
+  }
+  .search-no-reasults{
+
+    list-style-type: decimal;
+    padding: 0 0 0 20px;
+    margin: 0;
+  }
+}
+li{
+  counter-increment: li;
+  display: list-item;
+}
+li::marker{
+    display: list-item;
+
+    content: "" counter(li) ".";
+
+    color: #00cbff;
+
+
+}
+.link{
+  color: #e67474;
+  text-decoration: none;
+  font-weight: 300;
+  font-family: 'noto serif sc','source han serif sc','source han serif',source-han-serif-sc,'pt serif',songti sc,microsoft yahei,Georgia,serif;
+}
+.link:hover{
+  color: #4968ff;
+}

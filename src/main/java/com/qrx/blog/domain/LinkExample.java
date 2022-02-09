@@ -614,6 +614,76 @@ public class LinkExample {
             addCriterion("create_time not between", value1, value2, "createTime");
             return (Criteria) this;
         }
+
+        public Criteria andLinkImgIsNull() {
+            addCriterion("link_img is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andLinkImgIsNotNull() {
+            addCriterion("link_img is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andLinkImgEqualTo(String value) {
+            addCriterion("link_img =", value, "linkImg");
+            return (Criteria) this;
+        }
+
+        public Criteria andLinkImgNotEqualTo(String value) {
+            addCriterion("link_img <>", value, "linkImg");
+            return (Criteria) this;
+        }
+
+        public Criteria andLinkImgGreaterThan(String value) {
+            addCriterion("link_img >", value, "linkImg");
+            return (Criteria) this;
+        }
+
+        public Criteria andLinkImgGreaterThanOrEqualTo(String value) {
+            addCriterion("link_img >=", value, "linkImg");
+            return (Criteria) this;
+        }
+
+        public Criteria andLinkImgLessThan(String value) {
+            addCriterion("link_img <", value, "linkImg");
+            return (Criteria) this;
+        }
+
+        public Criteria andLinkImgLessThanOrEqualTo(String value) {
+            addCriterion("link_img <=", value, "linkImg");
+            return (Criteria) this;
+        }
+
+        public Criteria andLinkImgLike(String value) {
+            addCriterion("link_img like", value, "linkImg");
+            return (Criteria) this;
+        }
+
+        public Criteria andLinkImgNotLike(String value) {
+            addCriterion("link_img not like", value, "linkImg");
+            return (Criteria) this;
+        }
+
+        public Criteria andLinkImgIn(List<String> values) {
+            addCriterion("link_img in", values, "linkImg");
+            return (Criteria) this;
+        }
+
+        public Criteria andLinkImgNotIn(List<String> values) {
+            addCriterion("link_img not in", values, "linkImg");
+            return (Criteria) this;
+        }
+
+        public Criteria andLinkImgBetween(String value1, String value2) {
+            addCriterion("link_img between", value1, value2, "linkImg");
+            return (Criteria) this;
+        }
+
+        public Criteria andLinkImgNotBetween(String value1, String value2) {
+            addCriterion("link_img not between", value1, value2, "linkImg");
+            return (Criteria) this;
+        }
     }
 
     public static class Criteria extends GeneratedCriteria {

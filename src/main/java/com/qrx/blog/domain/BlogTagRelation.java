@@ -35,4 +35,5 @@ public class BlogTagRelation {
     public void setTagId(Integer tagId) {
         this.tagId = tagId;
     }
+
 }
